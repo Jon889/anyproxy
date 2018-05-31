@@ -51,14 +51,13 @@ class RecordRow extends React.Component {
     if (!data) {
       return null;
     }
-
     return (
       <tr className={this.props.className} onClick={this.props.detailHandler.bind(this, data.id)} >
         <td className={Style.id} >{data.id}</td>
         <td className={Style.method} >{this.getMethodDiv(data)}</td>
         <td className={Style.code} >{this.getCodeDiv(data)}</td>
         <td className={Style.host} >{data.host}</td>
-        <td className={Style.path} title={data.path} >{data.path}</td>
+        <td className={Style.path} title={data.path} >{data.path + " "}<b>{data.graphQL_name}</b></td>
         <td className={Style.mime} title={data.mime} >{data.mime}</td>
         <td className={Style.time} >{formatDate(data.startTime, 'hh:mm:ss')}</td>
       </tr>

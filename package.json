@@ -68,7 +68,6 @@
     "koa-send": "^3.2.0",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
-    "memwatch-next": "^0.3.0",
     "node-simhash": "^0.1.0",
     "nodeunit": "^0.9.1",
     "phantom": "^4.0.0",
