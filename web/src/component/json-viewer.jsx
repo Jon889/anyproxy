@@ -39,7 +39,7 @@ class JsonViewer extends React.Component {
         super();
 
         this.state = {
-            pageIndex: PageIndexMap.JSON_STRING
+            pageIndex: PageIndexMap.JSON_TREE
         };
 
         this.getMenuDiv = this.getMenuDiv.bind(this);
@@ -59,8 +59,8 @@ class JsonViewer extends React.Component {
     getMenuDiv () {
         return (
             <Menu onClick={this.handleMenuClick} mode="horizontal" selectedKeys={[this.state.pageIndex]} >
-                <Menu.Item key={PageIndexMap.JSON_STRING}>Source</Menu.Item>
                 <Menu.Item key={PageIndexMap.JSON_TREE}>Preview</Menu.Item>
+                <Menu.Item key={PageIndexMap.JSON_STRING}>Source</Menu.Item>
             </Menu>
         );
     }

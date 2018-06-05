@@ -115,6 +115,8 @@ class RecordRequestDetail extends React.Component {
       const bodyLength = requestBody.length;
       if (bodyLength > MAXIMUM_REQ_BODY_LENGTH) {
         return reqDownload;
+      } else if (recordDetail.mime == "application/json") {
+        return <div><JsonViewer data={requestBody}></JsonViewer></div>
       } else {
         return <div>{requestBody}</div>
       }
@@ -161,6 +163,10 @@ class RecordRequestDetail extends React.Component {
             <li className={Style.liItem} >
               <strong>URL:</strong>
               <span onClick={this.onSelectText} >{`${protocol}://${host}${path}`} </span>
+            </li>
+            <li className={Style.liItem} >
+              <strong>Query name:</strong>
+              <span>{recordDetail.graphQL_name} </span>
             </li>
             <li className={Style.liItem} >
               <strong>Protocol:</strong>
