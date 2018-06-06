@@ -7,7 +7,8 @@ const program = require('commander'),
   packageInfo = require('../package.json'),
   ruleLoader = require('../lib/ruleLoader'),
   util = require('../lib/util'),
-  logUtil = require('../lib/log');
+  logUtil = require('../lib/log'),
+  proxyMgr = require('../lib/proxyMgr');
 
 program
   .version(packageInfo.version)
@@ -71,6 +72,7 @@ if (program.clear) {
       silent: program.silent
     });
     // proxyServer.on('ready', () => {});
+    proxyMgr.setProxyState(true)
     proxyServer.start();
   })
   .catch(e => {
@@ -85,12 +87,13 @@ if (program.clear) {
     if (code > 0) {
       logUtil.printLog('AnyProxy is about to exit with code: ' + code, logUtil.T_ERR);
     }
-
+    proxyMgr.setProxyState(false)
     process.exit();
   });
 
   //exit cause ctrl+c
   process.on('SIGINT', () => {
+    proxyMgr.setProxyState(false)
     try {
       proxyServer && proxyServer.close();
     } catch (e) {
@@ -112,6 +115,7 @@ if (program.clear) {
     try {
       proxyServer && proxyServer.close();
     } catch (e) {}
+    proxyMgr.setProxyState(false)
     process.exit();
   });
 }
