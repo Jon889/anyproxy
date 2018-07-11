@@ -69,7 +69,6 @@ class JsonViewer extends React.Component {
         if (!this.props.data) {
             return null;
         }
-
         let jsonTreeDiv = <div>{this.props.data}</div>;
 
         try {

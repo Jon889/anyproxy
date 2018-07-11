@@ -105,21 +105,39 @@ class RecordRequestDetail extends React.Component {
       </div>
     );
   }
+  
+  jsBodyDiv(record) {
+    if (record.mime == "application/json") {
+      return <div><JsonViewer data={record.reqBody}></JsonViewer></div>
+    }
+  }
+
+  graphQLBodyDiv(record) {
+    if (record.graphQL_name) {
+      const json = JSON.parse(record.reqBody)
+      return (
+        <div>
+          <div><JsonViewer data={JSON.stringify(json.variables)}></JsonViewer></div>
+          <pre>{json.query}</pre>
+        </div>
+        )
+    }
+
+  }
 
   getReqBodyDiv() {
     const { recordDetail } = this.props;
-    const requestBody = recordDetail.reqBody;
 
-    const reqDownload = <a href={`/fetchReqBody?id=${recordDetail.id}&_t=${Date.now()}`} target="_blank">download</a>;
+    // const reqDownload = <a href={`/fetchReqBody?id=${recordDetail.id}&_t=${Date.now()}`} target="_blank">download</a>;
     const getReqBodyContent = () => {
-      const bodyLength = requestBody.length;
-      if (bodyLength > MAXIMUM_REQ_BODY_LENGTH) {
-        return reqDownload;
-      } else if (recordDetail.mime == "application/json") {
-        return <div><JsonViewer data={requestBody}></JsonViewer></div>
-      } else {
-        return <div>{requestBody}</div>
+      const plugins = [this.graphQLBodyDiv, this.jsBodyDiv]
+      for (let plugin of plugins) {
+        const bodyDiv = plugin(recordDetail)
+        if (bodyDiv) {
+          return bodyDiv
+        }
       }
+      return <div>{recordDetail.reqBody}</div>
     }
 
     return (
